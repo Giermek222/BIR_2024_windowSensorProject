@@ -1,0 +1,9 @@
+../Core/Src/WindowSensors/radioUtils.c:104:6:initRadioCommunication	56	static
+../Core/Src/WindowSensors/radioUtils.c:157:5:send_window_status_update	56	static
+../Core/Src/WindowSensors/radioUtils.c:194:6:OnTxDone	4	static
+../Core/Src/WindowSensors/radioUtils.c:200:6:OnRxDone	48	static
+../Core/Src/WindowSensors/radioUtils.c:237:6:handleAcknowledgementMessage	16	static
+../Core/Src/WindowSensors/radioUtils.c:249:6:handleUpdateStatusMessage	16	static
+../Core/Src/WindowSensors/radioUtils.c:261:6:OnTxTimeout	8	static
+../Core/Src/WindowSensors/radioUtils.c:268:6:OnRxTimeout	4	static
+../Core/Src/WindowSensors/radioUtils.c:274:6:OnRxError	8	static

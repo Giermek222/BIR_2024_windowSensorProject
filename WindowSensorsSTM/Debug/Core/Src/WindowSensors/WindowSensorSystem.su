@@ -1,0 +1,3 @@
+../Core/Src/WindowSensors/WindowSensorSystem.c:10:6:startSystem	40	static
+../Core/Src/WindowSensors/WindowSensorSystem.c:55:6:checkForUpdateRequests	24	static
+../Core/Src/WindowSensors/WindowSensorSystem.c:77:6:initialiseSystem	24	static
