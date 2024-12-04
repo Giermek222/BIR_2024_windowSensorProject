@@ -1,3 +1,2 @@
-../Core/Src/WindowSensors/WindowSensorSystem.c:10:6:startSystem	8
-../Core/Src/WindowSensors/WindowSensorSystem.c:55:6:checkForUpdateRequests	7
-../Core/Src/WindowSensors/WindowSensorSystem.c:77:6:initialiseSystem	1
+../Core/Src/WindowSensors/WindowSensorSystem.c:9:6:startSystem	9
+../Core/Src/WindowSensors/WindowSensorSystem.c:58:6:initialiseSystem	1

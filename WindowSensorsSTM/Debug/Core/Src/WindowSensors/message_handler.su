@@ -1,0 +1,3 @@
+../Core/Src/WindowSensors/message_handler.c:4:6:handleNewMessage	40	static
+../Core/Src/WindowSensors/message_handler.c:38:6:handleAcknowledgementMessage	16	static
+../Core/Src/WindowSensors/message_handler.c:53:6:handleUpdateStatusMessage	24	static

@@ -1,5 +1,6 @@
-Core/Src/WindowSensors/radioUtils.o: \
- ../Core/Src/WindowSensors/radioUtils.c \
+Core/Src/WindowSensors/message_handler.o: \
+ ../Core/Src/WindowSensors/message_handler.c \
+ ../Core/Inc/message_handler.h \
  C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/board.h \
  ../Drivers/CMSIS/Device/ST/STM32U5xx/Include/stm32u5xx.h \
  ../Drivers/CMSIS/Device/ST/STM32U5xx/Include/stm32u545xx.h \
@@ -45,7 +46,9 @@ Core/Src/WindowSensors/radioUtils.o: \
  C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/sx1276-board.h \
  C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/radio.h \
  ../Core/Inc/cryptography_module.h ../Core/Inc/gpio_control.h \
- ../Core/Inc/config.h ../Core/Inc/pointer_queue.h
+ ../Core/Inc/radioUtils.h ../Core/Inc/config.h \
+ ../Core/Inc/pointer_queue.h
+../Core/Inc/message_handler.h:
 C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/board.h:
 ../Drivers/CMSIS/Device/ST/STM32U5xx/Include/stm32u5xx.h:
 ../Drivers/CMSIS/Device/ST/STM32U5xx/Include/stm32u545xx.h:
@@ -92,5 +95,6 @@ C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/sx12
 C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/radio.h:
 ../Core/Inc/cryptography_module.h:
 ../Core/Inc/gpio_control.h:
+../Core/Inc/radioUtils.h:
 ../Core/Inc/config.h:
 ../Core/Inc/pointer_queue.h:

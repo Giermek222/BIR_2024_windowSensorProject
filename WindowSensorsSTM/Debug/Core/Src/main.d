@@ -44,7 +44,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/rtc-board.h \
  C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/sx1276-board.h \
  C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/radio.h \
- ../Core/Inc/WindowSensorSystem.h
+ ../Core/Inc/WindowSensorSystem.h ../Core/Inc/message_handler.h \
+ ../Core/Inc/cryptography_module.h ../Core/Inc/gpio_control.h \
+ ../Core/Inc/radioUtils.h ../Core/Inc/config.h \
+ ../Core/Inc/pointer_queue.h
 ../Core/Inc/main.h:
 ../Drivers/STM32U5xx_HAL_Driver/Inc/stm32u5xx_hal.h:
 ../Core/Inc/stm32u5xx_hal_conf.h:
@@ -92,3 +95,9 @@ C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/rtc-
 C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/sx1276-board.h:
 C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/radio.h:
 ../Core/Inc/WindowSensorSystem.h:
+../Core/Inc/message_handler.h:
+../Core/Inc/cryptography_module.h:
+../Core/Inc/gpio_control.h:
+../Core/Inc/radioUtils.h:
+../Core/Inc/config.h:
+../Core/Inc/pointer_queue.h:

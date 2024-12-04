@@ -1,3 +1,4 @@
+#include <pointer_queue.h>
 #include <stdbool.h>
 #include "board.h"
 #include "radio.h"
@@ -6,7 +7,7 @@
 extern int sensor1Id;
 extern int sensor2Id;
 extern int sensor3Id;
-extern int stationId;
+extern int station1Id;
 
 extern int MESSAGE_TYPE_REGISTER;
 extern int MESSAGE_TYPE_SEND_UPDATE;
@@ -20,6 +21,8 @@ extern bool isSensor3Registered;
 extern bool shouldUpdateSensor1;
 extern bool shouldUpdateSensor2;
 extern bool shouldUpdateSensor3;
+
+extern PointerQueue message_queue;
 
 typedef enum
 {

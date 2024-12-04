@@ -186,7 +186,6 @@ int send_window_status_update(int messageType, int stationId, int sensorId, int 
 
     Radio.Send( encoded_message, 7 );
     return 1;
-
 }
 
 
@@ -199,64 +198,12 @@ void OnTxDone( void )
 
 void OnRxDone( uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr )
 {
-    uint8_t*  decoded_message = decode_message(payload);
-
-    if (strlen((char *) decoded_message) != 5) {
-        printf("Error: Input string must be exactly 5 characters long.\n");
-    }
-
-
-    char messageType[2];
-    char stationId[3];
-    char sensorId[3];
-
-
-    messageType[0] = decoded_message[0];
-    messageType[1] = '\0';
-
-    stationId[0] = decoded_message[1];
-    stationId[1] = decoded_message[2];
-    stationId[2] = '\0';
-
-    sensorId[0] = decoded_message[3];
-    sensorId[1] = decoded_message[4];
-    sensorId[2] = '\0';
-
-    if (messageType[0] == MESSAGE_TYPE_ACKNOWLEDGEMENT) {
-    	handleAcknowledgementMessage(atoi(stationId), atoi(sensorId));
-    }
-    else if ((messageType[0] == MESSAGE_TYPE_REQUEST_UPDATE)) {
-    	handleUpdateStatusMessage(atoi(stationId), atoi(sensorId));
-    }
-
-
+	enqueue(&message_queue, payload);
     State = RX_DONE;
     trx_events_cnt.rxdone++;
 }
 
-void handleAcknowledgementMessage(int stationId, int sensorId) {
 
-	if (sensorId == sensor1Id)
-		isSensor1Registered = true;
-	else if (sensorId == sensor2Id)
-		isSensor1Registered = true;
-	else if (sensorId == sensor3Id)
-		isSensor1Registered = true;
-	else
-		return;
-}
-
-void handleUpdateStatusMessage(int stationId, int sensorId) {
-
-	if (sensorId == sensor1Id)
-		shouldUpdateSensor1 = true;
-	else if (sensorId == sensor2Id)
-		shouldUpdateSensor2 = true;
-	else if (sensorId == sensor3Id)
-		shouldUpdateSensor3 = true;
-	else
-		return;
-}
 
 void OnTxTimeout( void )
 {

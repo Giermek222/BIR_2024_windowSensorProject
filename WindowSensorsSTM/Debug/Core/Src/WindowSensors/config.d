@@ -1,5 +1,5 @@
 Core/Src/WindowSensors/config.o: ../Core/Src/WindowSensors/config.c \
- ../Core/Inc/config.h \
+ ../Core/Inc/config.h ../Core/Inc/pointer_queue.h \
  C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/board.h \
  ../Drivers/CMSIS/Device/ST/STM32U5xx/Include/stm32u5xx.h \
  ../Drivers/CMSIS/Device/ST/STM32U5xx/Include/stm32u545xx.h \
@@ -45,6 +45,7 @@ Core/Src/WindowSensors/config.o: ../Core/Src/WindowSensors/config.c \
  C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/sx1276-board.h \
  C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/radio.h
 ../Core/Inc/config.h:
+../Core/Inc/pointer_queue.h:
 C:/Users/buchwald/STM32CubeIDE/workspace_1.16.1/HelloWorldWithAccount/Radio/board.h:
 ../Drivers/CMSIS/Device/ST/STM32U5xx/Include/stm32u5xx.h:
 ../Drivers/CMSIS/Device/ST/STM32U5xx/Include/stm32u545xx.h:

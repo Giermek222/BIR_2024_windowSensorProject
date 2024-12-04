@@ -2,6 +2,8 @@
 "./Core/Src/WindowSensors/config.o"
 "./Core/Src/WindowSensors/cryptography_module.o"
 "./Core/Src/WindowSensors/gpio_control.o"
+"./Core/Src/WindowSensors/message_handler.o"
+"./Core/Src/WindowSensors/pointer_queue.o"
 "./Core/Src/WindowSensors/radioUtils.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32u5xx_hal_msp.o"

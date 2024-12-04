@@ -1,0 +1,5 @@
+../Core/Src/WindowSensors/pointer_queue.c:3:6:initQueue	16	static
+../Core/Src/WindowSensors/pointer_queue.c:9:5:isFull	16	static
+../Core/Src/WindowSensors/pointer_queue.c:13:5:isEmpty	16	static
+../Core/Src/WindowSensors/pointer_queue.c:17:5:enqueue	16	static
+../Core/Src/WindowSensors/pointer_queue.c:28:10:dequeue	24	static

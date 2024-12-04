@@ -9,6 +9,8 @@ C_SRCS += \
 ../Core/Src/WindowSensors/config.c \
 ../Core/Src/WindowSensors/cryptography_module.c \
 ../Core/Src/WindowSensors/gpio_control.c \
+../Core/Src/WindowSensors/message_handler.c \
+../Core/Src/WindowSensors/pointer_queue.c \
 ../Core/Src/WindowSensors/radioUtils.c 
 
 OBJS += \
@@ -16,6 +18,8 @@ OBJS += \
 ./Core/Src/WindowSensors/config.o \
 ./Core/Src/WindowSensors/cryptography_module.o \
 ./Core/Src/WindowSensors/gpio_control.o \
+./Core/Src/WindowSensors/message_handler.o \
+./Core/Src/WindowSensors/pointer_queue.o \
 ./Core/Src/WindowSensors/radioUtils.o 
 
 C_DEPS += \
@@ -23,6 +27,8 @@ C_DEPS += \
 ./Core/Src/WindowSensors/config.d \
 ./Core/Src/WindowSensors/cryptography_module.d \
 ./Core/Src/WindowSensors/gpio_control.d \
+./Core/Src/WindowSensors/message_handler.d \
+./Core/Src/WindowSensors/pointer_queue.d \
 ./Core/Src/WindowSensors/radioUtils.d 
 
 
@@ -33,7 +39,7 @@ Core/Src/WindowSensors/%.o Core/Src/WindowSensors/%.su Core/Src/WindowSensors/%.
 clean: clean-Core-2f-Src-2f-WindowSensors
 
 clean-Core-2f-Src-2f-WindowSensors:
-	-$(RM) ./Core/Src/WindowSensors/WindowSensorSystem.cyclo ./Core/Src/WindowSensors/WindowSensorSystem.d ./Core/Src/WindowSensors/WindowSensorSystem.o ./Core/Src/WindowSensors/WindowSensorSystem.su ./Core/Src/WindowSensors/config.cyclo ./Core/Src/WindowSensors/config.d ./Core/Src/WindowSensors/config.o ./Core/Src/WindowSensors/config.su ./Core/Src/WindowSensors/cryptography_module.cyclo ./Core/Src/WindowSensors/cryptography_module.d ./Core/Src/WindowSensors/cryptography_module.o ./Core/Src/WindowSensors/cryptography_module.su ./Core/Src/WindowSensors/gpio_control.cyclo ./Core/Src/WindowSensors/gpio_control.d ./Core/Src/WindowSensors/gpio_control.o ./Core/Src/WindowSensors/gpio_control.su ./Core/Src/WindowSensors/radioUtils.cyclo ./Core/Src/WindowSensors/radioUtils.d ./Core/Src/WindowSensors/radioUtils.o ./Core/Src/WindowSensors/radioUtils.su
+	-$(RM) ./Core/Src/WindowSensors/WindowSensorSystem.cyclo ./Core/Src/WindowSensors/WindowSensorSystem.d ./Core/Src/WindowSensors/WindowSensorSystem.o ./Core/Src/WindowSensors/WindowSensorSystem.su ./Core/Src/WindowSensors/config.cyclo ./Core/Src/WindowSensors/config.d ./Core/Src/WindowSensors/config.o ./Core/Src/WindowSensors/config.su ./Core/Src/WindowSensors/cryptography_module.cyclo ./Core/Src/WindowSensors/cryptography_module.d ./Core/Src/WindowSensors/cryptography_module.o ./Core/Src/WindowSensors/cryptography_module.su ./Core/Src/WindowSensors/gpio_control.cyclo ./Core/Src/WindowSensors/gpio_control.d ./Core/Src/WindowSensors/gpio_control.o ./Core/Src/WindowSensors/gpio_control.su ./Core/Src/WindowSensors/message_handler.cyclo ./Core/Src/WindowSensors/message_handler.d ./Core/Src/WindowSensors/message_handler.o ./Core/Src/WindowSensors/message_handler.su ./Core/Src/WindowSensors/pointer_queue.cyclo ./Core/Src/WindowSensors/pointer_queue.d ./Core/Src/WindowSensors/pointer_queue.o ./Core/Src/WindowSensors/pointer_queue.su ./Core/Src/WindowSensors/radioUtils.cyclo ./Core/Src/WindowSensors/radioUtils.d ./Core/Src/WindowSensors/radioUtils.o ./Core/Src/WindowSensors/radioUtils.su
 
 .PHONY: clean-Core-2f-Src-2f-WindowSensors
 
