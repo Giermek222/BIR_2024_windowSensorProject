@@ -1,2 +1,0 @@
-../Core/Src/WindowSensors/cryptography_module.c:3:7:encode_message	16	static
-../Core/Src/WindowSensors/cryptography_module.c:7:10:decode_message	16	static

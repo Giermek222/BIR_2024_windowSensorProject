@@ -1,0 +1,9 @@
+../Core/Src/WindowSensors/radioUtils.c:102:6:initRadioCommunication	56	static
+../Core/Src/WindowSensors/radioUtils.c:156:10:createCyphertext	56	static
+../Core/Src/WindowSensors/radioUtils.c:191:5:send_window_status_update	120	static
+../Core/Src/WindowSensors/radioUtils.c:260:5:getSequenceNumber	24	static
+../Core/Src/WindowSensors/radioUtils.c:286:6:OnTxDone	4	static
+../Core/Src/WindowSensors/radioUtils.c:292:6:OnRxDone	24	static
+../Core/Src/WindowSensors/radioUtils.c:301:6:OnTxTimeout	8	static
+../Core/Src/WindowSensors/radioUtils.c:308:6:OnRxTimeout	4	static
+../Core/Src/WindowSensors/radioUtils.c:314:6:OnRxError	8	static
