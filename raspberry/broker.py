@@ -1,93 +1,111 @@
-from radio_handle import *
-import threading
-import time
-import random
-from constants import *
-from crypto import *
-
-RADIO_MODE = RadioMode.FSK # Set the radio modulation: RadioMode.LORA or RadioMode.FSK
-MESSAGE_TYPE_REGISTER = '0'
-MESSAGE_TYPE_ACKNOWLEDGEMENT = '1'
-MESSAGE_TYPE_REQUEST_UPDATE = '2'
-MESSAGE_TYPE_SEND_UPDATE = '3'
-
-devices = []
-this_gateway_id = '10' #z parametru
-response_events = {}
-
-def receive_data(data, rssi=None, index=None):
-
-    print(f"Received data: {data}")
-    if len(data) != 22 or data[1:3] == this_gateway_id:
-        return
-
-    message_type = data[:1]
-    node_id = data[3:5]
-    window = int(data[5:6])
-    secret = data[6:22]
-
-    if message_type == MESSAGE_TYPE_SEND_UPDATE and node_id in devices:
-        if decryptSecret(secret, node_id) == False: return
-        print(f"o:[ID: {node_id}][RSSI: {rssi}] Odebrano wiadomość, okno jest " + window if "otwarte" else "zamknięte")
-        response_events[node_id].set()
-
-    if message_type == MESSAGE_TYPE_REGISTER and node_id not in devices: #Pierwsza rejestracja (pytanie: gdy będzie kryptografia, to czy tą wiadomością będzie mogło urządzenie się rejestrować ponownie? czy tylko z zapisanym kluczem)
-        
-        if decryptSecret(secret, node_id) == False: return
-
-        devices.append(node_id)           
-        print(f"o:[ID: {node_id}][RSSI: {rssi}] Zarejestrowano nowy czujnik.")
-        response_events[node_id] = threading.Event()  # Inicjalizacja Event dla nowego node_id
-        message_thread = threading.Thread(target=cycle_executor, args=(node_id,))
-        message_thread.start()
-
-def cycle_executor(id):
-    failures = 0
-    secret = generateSecret(id)
-    msg_to_send = MESSAGE_TYPE_ACKNOWLEDGEMENT + this_gateway_id + id + secret
-
-    for _ in range(2):
-        sleep_time = 2 + random.randint(3,8)
-        time.sleep(sleep_time)
-        radio_handler.send(msg_to_send)
-
-    while True:
-        wait_time = 30 + random.randint(1, 5)
-        time.sleep(wait_time)
-        response_events[id].clear() #Rozpoczynamy oczekiwanie na wiadomość
-        request = MESSAGE_TYPE_REQUEST_UPDATE + this_gateway_id + id + generateSecret(id)
-        radio_handler.send(request)
-        print(f"r:[ID: {id}] Wysyłanie żądania.")
-
-        retries = 0
-        while retries < 3:
-            time_out = 3 + random.randint(2, 5)
-            if response_events[id].wait(timeout=time_out):
-                failures = 0
-                break
-            else:
-                retries += 1
-                print(f"r:[ID: {id}] Brak odpowiedzi - ponowne wysłanie wiadomości.")
-                radio_handler.send(request)
-
-        if retries == 3:
-            print(f"[ID: {id}] Urządzenie nie odpowiada!")
-            failures += 1
-
-        if failures == 3:
-            print(f"r:[ID: {id}] Urządzenie nie odpowiada. Sprawdź stan urządzenia, a następnie naciśnij na czujniku przycisk reset.")
-            devices.remove(id)
-            break
-    print(f"[ID: {id}] Wątek dla urządzenia został zakończony. Oczekiwanie na ponowną rejestrację urządzenia")
-
-print(f"Broker o ID obszaru: {this_gateway_id} - rozpoczyna pracę.")
-radio_handler = RadioHandler(RADIO_MODE, receive_data)
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad
 
 
-try:
-    while True:
-        pass
-except KeyboardInterrupt:
-    print("Reception stopped.")
-finally:
-    radio_handler.cleanup()  # Clean up GPIO and close SPI
+messagecounter1 = 0
+messagecounter2 = 0
+messagecounter3 = 0
+key1 = "LubieRadioMocno!"
+key2 = "BIRJestWPytkeBro"
+key3 = "FKSPanyLORAToDno"
+
+def decryptSecretForSpecificNode(secret, key, counter):
+    window = 0
+    bitKey = key.encode('utf-8')
+    iv = b'\x00' * 16
+    cipher_dec = AES.new(bitKey, AES.MODE_CBC, iv)
+    # Tymczasowo dodane !!!
+    secret_bytes = bytes(secret, 'utf-8')
+    filtered_bytes = bytes(secret_bytes[i] for i in range(len(secret_bytes)) if i % 2 == 0)
+
+    print(filtered_bytes)
+    print("Secret bytes: " + filtered_bytes.hex())
+    decrypted = cipher_dec.decrypt(filtered_bytes) #secret
+    # Usuń wypełnienie bajtami zerowymi i zdekoduj na ciąg znaków
+
+    #decrypted = decrypted.rstrip(b'\x00')  # Usuń dodatkowe bajty zerowe
+    try:
+        decrypted_str = decrypted.decode('utf-8')  # Zdekoduj na ciąg znaków
+        print("odszyfrowanom: " + decrypted_str)
+
+    except (ValueError, UnicodeDecodeError) as e:
+        print(f"Deszyfrowane dane są nieprawidłowe: {decrypted}, błąd: {e}")
+        return [False, counter]
+    #decrypted = cipher_dec.decrypt(secret)
+    #### Tutaj rozdzielamy licznik i okno
+    window = int(decrypted_str[:1])
+    decrypted_int = int(decrypted_str[1:16])
+    #### Koniec
+    print(f"decrypted: {decrypted_int}")
+    if decrypted_int >= counter-5 or decrypted_int <= counter+5:
+        return [True, counter + 1, window]
+    else:
+        return [False, counter, window]
+
+
+def extract(secret, counter):
+    window = int(secret[:1])
+    received_counter = int(secret[1:16])
+    if received_counter >= counter and received_counter <= counter+5:
+        #print('działa')
+        return [True, counter + 1, window]
+    else:
+        #print('nie działa')
+        return [False, counter, window]
+
+def generateSecretForSpecificNode(key, counter):
+    #print(key)
+    #print(bytes(key).hex())
+
+    #if len(key) != 16:
+    #    raise ValueError("Key must be exactly 16 bytes long.")
+
+    padded_string = str(counter).zfill(16)
+    #print("Padded String:", padded_string)
+
+    data = padded_string.encode('utf-8')
+    bitKey = key.encode('utf-8')
+
+    iv = b'\x00' * 16
+    cipher = AES.new(bitKey, AES.MODE_CBC, iv)
+
+    ciphertext = cipher.encrypt(data)
+    counter = counter + 1
+    return padded_string, counter
+
+
+def generateSecret(node_id):
+    global messagecounter1
+    global messagecounter2
+    global messagecounter3
+    global key1
+    global key2
+    global key3
+
+
+    ciphertext = ''
+    if node_id == '01':
+        [ciphertext, messagecounter1] = generateSecretForSpecificNode(key1, messagecounter1)
+    elif node_id == '02':
+        [ciphertext, messagecounter2] =  generateSecretForSpecificNode(key2, messagecounter2)
+    elif node_id == '03':
+        [ciphertext, messagecounter3] =  generateSecretForSpecificNode(key3, messagecounter3)
+    return ciphertext
+
+def decryptSecret(secret, node_id):
+
+    global messagecounter1
+    global messagecounter2
+    global messagecounter3
+    global key1
+    global key2
+    global key3
+    window = 0
+    validated = False
+    if node_id == '01':
+        [validated, messagecounter1, window] = extract(secret, messagecounter1)
+    elif node_id == '02':
+        [validated, messagecounter2, window] =  extract(secret, messagecounter2)
+    elif node_id == '03':
+        [validated, messagecounter3, window] =  extract(secret, messagecounter3)
+    return validated, window
