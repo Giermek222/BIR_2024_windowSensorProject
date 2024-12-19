@@ -22,7 +22,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "config.h"
 
 
-#define RF_FREQUENCY                                808000000 // Hz
+#define RF_FREQUENCY                                868000000 // Hz
 #define TX_OUTPUT_POWER                             0         // dBm
 
 //Always FSK
@@ -153,39 +153,8 @@ void initRadioCommunication( void )
 }
 
 
-uint8_t* createCyphertext(int sensorId, uint8_t* plaintextSecret, uint8_t* ciphertext) {
-	cmox_cipher_retval_t retval;
-	 if (sensorId == sensor1Id)
-	{
-		 retval = cmox_cipher_encrypt(CMOX_AES_CBC_ENC_ALGO,
-		    						plaintextSecret, 16,
-									(uint8_t*)key1, 16,
-									iv, 16,
-									ciphertext, 16);
-	}
-	else if (sensorId == sensor2Id)
-	{
-		retval = cmox_cipher_encrypt(CMOX_AES_CBC_ENC_ALGO,
-	    						plaintextSecret, 16,
-								(uint8_t*)key2, 16,
-								iv, 16,
-								ciphertext, 16);
-	}
-	else if (sensorId == sensor3Id)
-	{
-		retval = cmox_cipher_encrypt(CMOX_AES_CBC_ENC_ALGO,
-	    						plaintextSecret, 16,
-								(uint8_t*)key3, 16,
-								iv, 16,
-								ciphertext, 16);
-	}
+uint8_t* createCyphertext(int sensorId, uint8_t* plaintext, uint8_t* ciphertext) {
 
-
-	if (retval != CMOX_CIPHER_SUCCESS) {
-	    printf("something went wrong :(");
-	}
-
-	return ciphertext;
 }
 
 int send_window_status_update(int messageType, int stationId, int sensorId, int windowStatus)
@@ -195,8 +164,8 @@ int send_window_status_update(int messageType, int stationId, int sensorId, int 
 	if (messageType != 0 && messageType != 3)
 		return 0;
 
-	Radio.Standby();
 
+	Radio.Standby();
 	char message[22];
 
 	char messageTypeMessage[2];
@@ -204,9 +173,9 @@ int send_window_status_update(int messageType, int stationId, int sensorId, int 
 	char sensorIdMessage[3];
 	char windowStatusMessage[2];
 	uint8_t plaintextSecret[16];
-	uint8_t cyphertext[16];
+	uint8_t cyphertext[16] = {0};
+	uint8_t plaintext[17];
 	char secret[16];
-
 
     snprintf(stationIdMessage, sizeof(stationIdMessage), "%02d", stationId);
     snprintf(sensorIdMessage, sizeof(sensorIdMessage), "%02d", sensorId);
@@ -216,35 +185,81 @@ int send_window_status_update(int messageType, int stationId, int sensorId, int 
     int messageNumber = getSequenceNumber(sensorId);
     if (messageNumber == -1) return;
 
-    snprintf(plaintextSecret, sizeof(plaintextSecret), "%016d", messageNumber);
-    plaintextSecret[0] = windowStatusMessage[0];
+    snprintf(plaintext, sizeof(plaintext), "%016d", messageNumber);
+    plaintextSecret[0] = (uint8_t)windowStatusMessage[0];
+    plaintextSecret[1] = plaintext[1];
+    plaintextSecret[2] = plaintext[2];
+    plaintextSecret[3] = plaintext[3];
+    plaintextSecret[4] = plaintext[4];
+    plaintextSecret[5] = plaintext[5];
+    plaintextSecret[6] = plaintext[6];
+    plaintextSecret[7] = plaintext[7];
+    plaintextSecret[8] = plaintext[8];
+    plaintextSecret[9] = plaintext[9];
+    plaintextSecret[10] = plaintext[10];
+    plaintextSecret[11] = plaintext[11];
+    plaintextSecret[12] = plaintext[12];
+    plaintextSecret[13] = plaintext[13];
+    plaintextSecret[14] = plaintext[14];
+    plaintextSecret[15] = plaintext[15];
+
+/*
+    cmox_cipher_retval_t retval;
+    	size_t computed_size;
+    	 if (sensorId == sensor1Id)
+    	{
+    		 retval = cmox_cipher_encrypt(CMOX_AES_CBC_ENC_ALGO,
+    				 plaintextSecret, sizeof(plaintextSecret),
+    									(uint8_t*)key1, sizeof(key1),
+    									iv, sizeof(iv),
+										cyphertext, computed_size);
+    	}
+    	else if (sensorId == sensor2Id)
+    	{
+    		retval = cmox_cipher_encrypt(CMOX_AES_CBC_ENC_ALGO,
+   				 plaintextSecret, sizeof(plaintextSecret),
+   									(uint8_t*)key2, sizeof(key2),
+   									iv, sizeof(iv),
+									cyphertext, computed_size);
+    	}
+    	else if (sensorId == sensor3Id)
+    	{
+    		retval = cmox_cipher_encrypt(CMOX_AES_CBC_ENC_ALGO,
+   				 plaintextSecret, sizeof(plaintextSecret),
+   									(uint8_t*)key3, sizeof(key3),
+   									iv, sizeof(iv),
+									cyphertext, computed_size);
+    	}
 
 
-    createCyphertext(sensorId, plaintextSecret, cyphertext);
+    	if (retval != CMOX_CIPHER_SUCCESS) {
+    	    printf("something went wrong");
+    	}
 
 
+*/
 
     message[0] = messageTypeMessage[0];
     message[1] = stationIdMessage[0];
     message[2] = stationIdMessage[1];
     message[3] = sensorIdMessage[0];
     message[4] = sensorIdMessage[1];
-    message[5] = secret[0];
-    message[6] = secret[1];
-    message[7] = secret[2];
-    message[8] = secret[3];
-    message[9] = secret[4];
-    message[10] = secret[5];
-    message[11] = secret[6];
-    message[12] = secret[7];
-    message[13] = secret[8];
-    message[14] = secret[9];
-    message[15] = secret[10];
-    message[16] = secret[11];
-    message[17] = secret[12];
-    message[18] = secret[13];
-    message[19] = secret[14];
-    message[20] = secret[15];
+    message[5] = (char)plaintextSecret[0];
+    message[6] = (char)plaintextSecret[1];
+    message[7] = (char)plaintextSecret[2];
+    message[8] = (char)plaintextSecret[3];
+    message[9] = (char)plaintextSecret[4];
+    message[10] = (char)plaintextSecret[5];
+    message[11] = (char)plaintextSecret[6];
+    message[12] = (char)plaintextSecret[7];
+    message[13] = (char)plaintextSecret[8];
+    message[14] = (char)plaintextSecret[9];
+    message[15] = (char)plaintextSecret[10];
+    message[16] = (char)plaintextSecret[11];
+    message[17] = (char)plaintextSecret[12];
+    message[18] = (char)plaintextSecret[13];
+    message[19] = (char)plaintextSecret[14];
+    message[20] = (char)plaintextSecret[15];
     message[21] = '\0';
 
     for (int i = 0; i < 5; ++i) {

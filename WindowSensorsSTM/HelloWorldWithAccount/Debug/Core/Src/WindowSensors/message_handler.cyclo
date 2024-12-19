@@ -1,4 +1,4 @@
-../Core/Src/WindowSensors/message_handler.c:3:6:handleNewMessage	5
-../Core/Src/WindowSensors/message_handler.c:58:5:decodeMessage	7
-../Core/Src/WindowSensors/message_handler.c:120:6:handleAcknowledgementMessage	5
-../Core/Src/WindowSensors/message_handler.c:135:6:handleUpdateStatusMessage	8
+../Core/Src/WindowSensors/message_handler.c:6:6:handleNewMessage	5
+../Core/Src/WindowSensors/message_handler.c:64:5:decodeMessage	1
+../Core/Src/WindowSensors/message_handler.c:128:6:handleAcknowledgementMessage	5
+../Core/Src/WindowSensors/message_handler.c:143:6:handleUpdateStatusMessage	8

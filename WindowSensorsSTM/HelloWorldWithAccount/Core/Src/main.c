@@ -45,7 +45,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 CRYP_HandleTypeDef hcryp;
-uint32_t pKeyAES[4] = {0x00000000,0x00000000,0x00000000,0x00000000};
+__ALIGN_BEGIN static const uint32_t pKeyAES[4] __ALIGN_END = {
+                            0x00000000,0x00000000,0x00000000,0x00000000};
 
 DMA_HandleTypeDef handle_LPDMA1_Channel0;
 
@@ -94,11 +95,11 @@ int main(void)
 
   /* USER CODE END Init */
 
-  /* Configure the system clock */
-  SystemClock_Config();
-
   /* Configure the System Power */
   SystemPower_Config();
+
+  /* Configure the system clock */
+  SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
 

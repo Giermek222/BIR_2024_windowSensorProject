@@ -5,5 +5,5 @@
 
 USER_OBJS :=
 
-LIBS := -llibSTM32Cryptographic_CM3.a
+LIBS := -lSTM32Cryptographic_CM7
 

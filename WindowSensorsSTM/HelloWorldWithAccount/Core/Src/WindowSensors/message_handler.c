@@ -1,11 +1,15 @@
 #include "message_handler.h"
 
+
+
+
 void handleNewMessage()
 {
     uint8_t*  decoded_message = dequeue(&message_queue);
+    int a = strlen((char *) decoded_message);
 
-    if (strlen((char *) decoded_message) != 5) {
-        printf("Error: Input string must be exactly 21 characters long.\n");
+    if (strlen((char *) decoded_message) != 21) {
+       printf("Error: Input string must be exactly 21 characters long.\n");
     }
 
     char messageType[2];
@@ -43,24 +47,28 @@ void handleNewMessage()
     secret[15] = decoded_message[20];
     secret[16] = decoded_message[21];
 
+    int id = (int)((char)sensorId[1] - '0');
+    if (decodeMessage(id, secret) == -1) return;
 
-    if (decodeMessage(atoi(sensorId), secret) == 0) return;
+    getSequenceNumber(id);
 
     if (messageType[0] == MESSAGE_TYPE_ACKNOWLEDGEMENT) {
-    	handleAcknowledgementMessage(atoi(stationId), atoi(sensorId));
+    	handleAcknowledgementMessage(atoi(stationId), id);
     }
     else if ((messageType[0] == MESSAGE_TYPE_REQUEST_UPDATE)) {
-    	handleUpdateStatusMessage(atoi(stationId), atoi(sensorId));
+    	handleUpdateStatusMessage(atoi(stationId), id);
     }
 
 }
 
 int decodeMessage(int sensorId, uint8_t* secret) {
 
+	return 0;
 	uint8_t decrypted_plaintext[16];
 	size_t decrypted_len;
 	cmox_cipher_retval_t retval;
 	int number;
+
 
 	if (sensorId == sensor1Id) {
 		retval = cmox_cipher_decrypt(CMOX_AESFAST_CTR_DEC_ALGO,           /* Use AES CTR algorithm */
@@ -94,7 +102,7 @@ int decodeMessage(int sensorId, uint8_t* secret) {
 	}
 	else if (sensorId == sensor3Id) {
 		retval = cmox_cipher_decrypt(CMOX_AESFAST_CTR_DEC_ALGO,           /* Use AES CTR algorithm */
-												secret, sizeof(secret),        /* Ciphertext to decrypt */
+											   secret, sizeof(secret),        /* Ciphertext to decrypt */
 											   key3, sizeof(key1),                      /* AES key to use */
 											   iv, sizeof(iv),                        /* Initialization vector */
 											   decrypted_plaintext, &decrypted_plaintext);

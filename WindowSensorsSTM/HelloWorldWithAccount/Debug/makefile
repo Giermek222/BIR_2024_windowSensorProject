@@ -63,8 +63,8 @@ all: main-build
 main-build: HelloWorldWithAccount.elf secondary-outputs
 
 # Tool invocations
-HelloWorldWithAccount.elf HelloWorldWithAccount.map: $(OBJS) $(USER_OBJS) C:\Users\buchwald\STM32CubeIDE\workspace_1.16.1\HelloWorldWithAccount\STM32U545RETXQ_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "HelloWorldWithAccount.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m33 -T"C:\Users\buchwald\STM32CubeIDE\workspace_1.16.1\HelloWorldWithAccount\STM32U545RETXQ_FLASH.ld" --specs=nosys.specs -Wl,-Map="HelloWorldWithAccount.map" -Wl,--gc-sections -static -L"C:\Users\buchwald\STM32CubeIDE\workspace_1.16.1\HelloWorldWithAccount\Middlewares\ST\STM32_Cryptographic\lib" --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+HelloWorldWithAccount.elf HelloWorldWithAccount.map: $(OBJS) $(USER_OBJS) C:\Users\buchwald\STM32CubeIDE\workspace_1.17.0\WindowSensorsSTM\HelloWorldWithAccount\STM32U545RETXQ_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "HelloWorldWithAccount.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m33 -T"C:\Users\buchwald\STM32CubeIDE\workspace_1.17.0\WindowSensorsSTM\HelloWorldWithAccount\STM32U545RETXQ_FLASH.ld" --specs=nosys.specs -Wl,-Map="HelloWorldWithAccount.map" -Wl,--gc-sections -static -L"C:\Users\buchwald\STM32CubeIDE\workspace_1.17.0\WindowSensorsSTM\HelloWorldWithAccount\Middlewares\ST\STM32_Cryptographic\lib" --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
